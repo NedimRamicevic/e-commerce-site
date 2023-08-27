@@ -2,21 +2,25 @@ import React from 'react'
 import Product from './product'
 import IProduct from '../types/product'
 import { useEffect, useState } from 'react'
+import { collection, getDocs,doc,setDoc } from 'firebase/firestore'
+import { db } from '../../firebase'
 
-async function getProducts() {
 
-  
-  const res = await fetch('http://localhost:3000/api/products',
-  {
-    cache: "no-store",
-  }
-  )
-  const data = await res.json()
-  
-  
-  
-  return data
+const onLikeClick = async (product: IProduct) => {
+ 
+    const docRef = await setDoc(doc(db, "Allproducts", product.id.toString()), {
+        ...product,
+        isLiked: !product.isLiked ,
+    });
+    
 }
+const getProducts = async () => {
+    const querySnapshot = await getDocs(collection(db, "Allproducts"))
+    const products = querySnapshot.docs.map((doc) => doc.data()) as IProduct[]
+    return products
+}
+
+
 function Products(props: any) {
    const [isLoading, setIsLoading] = useState(true)
     const [products, setProducts] = useState<IProduct[]>([])
@@ -33,15 +37,11 @@ function Products(props: any) {
   }
   const list = [1,2,3,4,5,6,7,8,9,10]
     useEffect(() => {
-        fetch('http://localhost:3000/api/products').
-        then(res => res.json()).
-        then(data => {
-            setProducts(data)
-            setTimeout(() => {
-              setIsLoading(false)
-            }, 500);
+        getProducts().then((products) => {
+            setProducts(products)
+            setIsLoading(false)
         })
-    }, [])
+    },)
 
   return (
     <div className={ props.gridcol  == '3' ? 'grid grid-cols-3' : 'grid grid-cols-4'}>
@@ -54,7 +54,7 @@ function Products(props: any) {
          )
               :(products.map((product:IProduct) => (
                 <div key={product.id}>
-                    <Product product={product}/>
+                    <Product onLikeClick={onLikeClick} product={product}/>
                 </div>
 
               )))

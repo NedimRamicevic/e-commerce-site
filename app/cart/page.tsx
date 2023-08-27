@@ -24,6 +24,15 @@ const onMinusClick = async (product: any) => {
     });
   }
 }
+const countTotalPrice = async () => {
+  const querySnapshot = await getDocs(collection(db, "products"))
+  const products = querySnapshot.docs.map((doc) => doc.data())
+  let total = 0
+  products.forEach((product: any) => {
+    total += product.price * product.quantity
+  })
+  return total
+}
 
 function CartPage(params: any) {
     const [products, setProducts] = useState([] as any)
@@ -43,6 +52,7 @@ function CartPage(params: any) {
            
         }
         fetchData()
+        countTotalPrice().then((total) => setTotalPrice(total))
     }, [products])
   
     

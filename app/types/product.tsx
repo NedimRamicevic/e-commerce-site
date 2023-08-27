@@ -8,4 +8,5 @@ export default interface IProduct {
     image: string;
     rating: object;
     quantity: number;
+    isLiked: boolean;
 }

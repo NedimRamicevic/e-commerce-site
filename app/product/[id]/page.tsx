@@ -5,6 +5,22 @@ import Product from '../../components/product'
 import ProductDetail from '@/app/components/product-detail'
 import { collection, addDoc, getDocs, doc, setDoc } from 'firebase/firestore'
 import { db } from '../../../firebase'
+import IProduct from '@/app/types/product'
+
+
+const getProducts = async () => {
+    const querySnapshot = await getDocs(collection(db, "Allproducts"))
+    const products = querySnapshot.docs.map((doc) => doc.data()) as IProduct[]
+    return products
+}
+const onLikeClick = async (product: IProduct) => {
+ 
+    const docRef = await setDoc(doc(db, "Allproducts", product.id.toString()), {
+        ...product,
+        isLiked: !product.isLiked ,
+    });
+    
+}
 
 const addProduct = async (product: any) => {
     //add with custom id
@@ -36,7 +52,7 @@ const addProduct = async (product: any) => {
 
 
 function ProductPAge({params}: any) {
-    const [product, setProduct] = useState()
+    const [product, setProduct] = useState<IProduct>()
     const [loading, setLoading] = useState(true)
     const fake = {
         id: 1,
@@ -49,8 +65,7 @@ function ProductPAge({params}: any) {
         quantity: 1,
     }
     useEffect(() => {
-        fetch(`http://localhost:3000/api/products`).
-        then(res => res.json()).
+        getProducts().
         then(data => {
             const pr = data.filter((product: any) => product.id == params.id)
             setProduct(pr[0])
@@ -58,12 +73,12 @@ function ProductPAge({params}: any) {
                 setLoading(false)
               }, 500);
         })
-    },[params])
+    },)
 
   return (
     <div>
         { loading  ? (<div className='text-white'><Product product={fake}/></div>) :   (<div>
-            <ProductDetail addProduct={addProduct} product={product} />
+            <ProductDetail onLikeClick={onLikeClick} addProduct={addProduct} product={product} />
         </div>)}
     </div>
   )

@@ -196,7 +196,8 @@ function ProductDetail(params: any) {
             }}-500 ml-4"
           >
             <svg
-              fill="currentColor"
+            onClick={() => params.onLikeClick(params.product)}
+              fill={params.product.isLiked ? 'red' : 'gray'}
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="2"

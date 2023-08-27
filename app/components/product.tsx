@@ -1,7 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
-
 import { collection, getDocs,doc,setDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
 
@@ -45,6 +44,8 @@ interface IProduct {
 }
 
 export default function Product(params :any) {
+
+console.log(params.product)
   return (
    
     <div className="bg-gray-100 flex flex-col justify-center min-h-full">
@@ -95,11 +96,12 @@ export default function Product(params :any) {
             </div>
             <div className="flex flex-col-reverse mb-1 mr-4 group cursor-pointer">
               <svg
+              onClick={() =>params.onLikeClick(params.product)}
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 group-hover:opacity-70"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke="gray"
+                stroke={params.product.isLiked ? 'red' : 'blue'}
               >
                 <path
                   stroke-linecap="round"
