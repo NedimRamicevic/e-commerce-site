@@ -73,6 +73,7 @@ function About() {
         <div className="flex flex-col gap-4">
           <a href="https://www.linkedin.com/in/nedim-ramazanoğlu/">LinkedIn</a>
           <a href="github.com/NedimRamicevic"  >Github</a>
+          <a href="https://portfolio-taupe-zeta-24.vercel.app/">Portfolio</a>
         </div>
       </div>
     </div>
