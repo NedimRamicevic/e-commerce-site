@@ -1,5 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link';
 
 interface IProduct {
     id: number;
@@ -21,7 +22,7 @@ export default function Product(params :any) {
           className="relative max-w-sm min-w-[340px] bg-white shadow-md rounded-3xl p-2 mx-1 my-3 cursor-pointer"
         >
           <div className="overflow-x-hidden rounded-2xl relative">
-            <a >
+            <Link href={`/product/${params.product.id}`} >
               <Image
                 className="h-40 rounded-2xl w-full object-contain"
                 src={ params.product.image }
@@ -29,7 +30,7 @@ export default function Product(params :any) {
                 width={ 300 }
                 height={ 300 }
               />
-            </a>
+            </Link>
             <p
               className="absolute right-2 top-2 bg-white rounded-full p-2 cursor-pointer group"
             >
@@ -51,11 +52,11 @@ export default function Product(params :any) {
           </div>
           <div className="mt-4 pl-2 mb-2 flex justify-between">
             <div>
-              <a >
+              <Link href={`/product/${params.product.id}`} >
                 <p className="text-lg font-semibold text-gray-900 mb-0">
                   {params.product.title }
                 </p>
-              </a>
+              </Link>
               <p className="text-md text-gray-800 mt-0">
                 {params.product.price  }
               </p>
