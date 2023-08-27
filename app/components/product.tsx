@@ -12,7 +12,7 @@ interface IProduct {
     quantity: number;
 }
 
-function Product(product :IProduct) {
+export default function Product(params :any) {
   return (
    
     <div className="bg-gray-100 flex flex-col justify-center min-h-full">
@@ -24,7 +24,7 @@ function Product(product :IProduct) {
             <a >
               <Image
                 className="h-40 rounded-2xl w-full object-contain"
-                src={ product.image }
+                src={ params.product.image }
                 alt=''
                 width={ 300 }
                 height={ 300 }
@@ -53,11 +53,11 @@ function Product(product :IProduct) {
             <div>
               <a >
                 <p className="text-lg font-semibold text-gray-900 mb-0">
-                  { product.title }
+                  {params.product.title }
                 </p>
               </a>
               <p className="text-md text-gray-800 mt-0">
-                {product.price  }
+                {params.product.price  }
               </p>
             </div>
             <div className="flex flex-col-reverse mb-1 mr-4 group cursor-pointer">
@@ -84,4 +84,4 @@ function Product(product :IProduct) {
   )
 }
 
-export default Product
+ 

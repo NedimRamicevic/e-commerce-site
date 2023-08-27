@@ -29,7 +29,10 @@ async function getProducts() {
     <div className={ props.gridcol  == '3' ? 'grid grid-cols-3' : 'grid grid-cols-4'}>
          {products &&
               products.map((product:IProduct) => (
-               Product(product)
+                <div key={product.id}>
+                    <Product product={product}/>
+                </div>
+
               ))
                 
             }
