@@ -2,11 +2,28 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { collection, addDoc, getDocs } from 'firebase/firestore'
+import { collection, getDocs,doc, deleteDoc,setDoc } from 'firebase/firestore'
 import { db } from '../../firebase'
 
 
+const removeProduct = async (id: any) => {
+    await deleteDoc(doc(db, "products", id.toString()));
+}
 
+const onPlusClick = async (product: any) => {
+    const docRef = await setDoc(doc(db, "products", product.id.toString()), {
+        ...product,
+        quantity: product.quantity + 1,
+    });
+}
+const onMinusClick = async (product: any) => {
+  if (product.quantity > 1) {
+    const docRef = await setDoc(doc(db, "products", product.id.toString()), {
+        ...product,
+        quantity: product.quantity - 1,
+    });
+  }
+}
 
 function CartPage(params: any) {
     const [products, setProducts] = useState([] as any)
@@ -70,6 +87,7 @@ function CartPage(params: any) {
                <span className="text-red-500 text-xs">{ product.category }</span>
                <div>
                  <button
+                 onClick={() => removeProduct(product.id)}
                    className="font-semibold hover:text-red-500 text-gray-500 text-xs"
                  >
                    Remove
@@ -79,7 +97,7 @@ function CartPage(params: any) {
            </div>
            <div className="flex justify-center w-1/5">
              <svg
-               
+               onClick={() => onMinusClick(product)}
                className="fill-current text-gray-600 w-3"
                viewBox="0 0 448 512"
              >
@@ -95,6 +113,7 @@ function CartPage(params: any) {
              />
    
              <svg
+                onClick={() => onPlusClick(product)}
                className="fill-current text-gray-600 w-3"
                viewBox="0 0 448 512"
              >

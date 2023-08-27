@@ -2,6 +2,37 @@ import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
 
+import { collection, getDocs,doc,setDoc } from 'firebase/firestore'
+import { db } from '../../firebase'
+
+
+const addProduct = async (product: any) => {
+  //add with custom id
+  //get collection ids
+  const querySnapshot = await getDocs(collection(db, "products"))
+  const ids = querySnapshot.docs.map((doc) => doc.id)
+  const savedProducts= querySnapshot.docs.map((doc) => doc.data())
+  const savedProduct = savedProducts.filter((p: any) => p.id == product.id)
+
+  if (ids.includes(product.id.toString())) {
+      console.log('product exists')
+      console.log(product)
+      const newq = parseInt(product.quantity) 
+      console.log(newq)
+      const docRef = await setDoc(doc(db, "products", product.id.toString()), {
+          ...product,
+          quantity: savedProduct[0].quantity + 1,
+      });
+  }
+  else {
+      const docRef = await setDoc(doc(db, "products", product.id.toString()), {
+          ...product,
+          quantity: 1,
+      });
+  }
+  
+  
+}
 interface IProduct {
     id: number;
     title: string;
@@ -35,6 +66,7 @@ export default function Product(params :any) {
               className="absolute right-2 top-2 bg-white rounded-full p-2 cursor-pointer group"
             >
               <svg
+              onClick={() => addProduct(params.product)}
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 group-hover:opacity-50 opacity-70"
                 fill="none"
