@@ -27,7 +27,7 @@ const addProduct = async (product: any) => {
     else {
         const docRef = await setDoc(doc(db, "products", product.id.toString()), {
             ...product,
-            quantity: 1,
+            quantity: 1,    
         });
     }
     

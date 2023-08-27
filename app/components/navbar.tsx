@@ -45,7 +45,7 @@ function Navbar() {
       <div className="flex justify-center md:block">
         <div className="relative text-gray-700 hover:text-gray-600" >
           <Link
-          href="cart"
+          href="/cart"
           >
           <svg
             className="h-5 w-5"
