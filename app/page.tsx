@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 
 export default function Home() {
-  const [gridcol, setGridcol] = useState(3)
+  const [gridcol, setGridcol] = useState(4)
   const [show, setShow] = useState(false)
 
   const setGrid = (gridcol: number) => {
