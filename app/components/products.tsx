@@ -44,7 +44,7 @@ function Products(props: any) {
     },)
 
   return (
-    <div className={ props.gridcol  == '3' ? 'grid grid-cols-3' : 'grid grid-cols-4'}>
+    <div className={ props.gridcol  == '3' ? 'grid grid-cols-3 gap-5' : 'grid grid-cols-4 gap-4'}>
          {isLoading ? (
                 list.map((x) => (
                   <div className='text-white' key={x}>

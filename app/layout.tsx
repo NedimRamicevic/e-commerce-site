@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       
-      <body className=' bg-white' >
+      <body className=' bg-white mx-2 gap-6 flex flex-col' >
       <Navbar/>
       {children}</body>
     </html>
