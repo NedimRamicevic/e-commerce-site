@@ -51,7 +51,7 @@ export default function Home() {
   </svg>
   </button>
   {
-  show ? (<div id="dropdown" className="z-10 absolute mt-2 bg-gray-300 divide-y divide-gray-100 rounded-lg  w-32 ">
+  show ? (<div id="dropdown" className=" z-20 absolute  mt-8 bg-gray-300 divide-y divide-gray-100 rounded-lg  w-32 ">
   <ul className="py-2 text-sm text-black " aria-labelledby="dropdownDefaultButton">
     <li>
       <div 
