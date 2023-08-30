@@ -46,8 +46,7 @@ function CartPage(params: any) {
                 .then((querySnapshot)=>{              
                     const newData = querySnapshot.docs
                         .map((doc) => ({...doc.data(), id:doc.id }));
-                    setProducts(newData);                
-                    console.log(products, newData);
+                    setProducts(newData);           
                 })
            
         }
