@@ -14,10 +14,9 @@ const addProduct = async (product: any) => {
   const savedProduct = savedProducts.filter((p: any) => p.id == product.id)
 
   if (ids.includes(product.id.toString())) {
-      console.log('product exists')
-      console.log(product)
+     
       const newq = parseInt(product.quantity) 
-      console.log(newq)
+      
       const docRef = await setDoc(doc(db, "products", product.id.toString()), {
           ...product,
           quantity: savedProduct[0].quantity + 1,
@@ -31,6 +30,14 @@ const addProduct = async (product: any) => {
   }
   
   
+  
+}
+const dynamicArrayfromRating = (rating: number) => {
+  let arr = []
+  for (let i = 0; i < rating; i++) {
+    arr.push(i)
+  }
+  return arr
 }
 interface IProduct {
     id: number;
@@ -44,10 +51,9 @@ interface IProduct {
 }
 
 export default function Product(params :any) {
-
-  const rateLoop = Array.from(Array(params.product.rating.rate).keys())
-
-console.log(params.product)
+  
+  const rateLoop = dynamicArrayfromRating(params.product.rating.rate)
+ 
   return (
    
     <div className=" bg-white flex flex-col justify-center min-h-full">
@@ -58,7 +64,7 @@ console.log(params.product)
           <div className="overflow-x-hidden rounded-2xl relative">
             <Link href={`/product/${params.product.id}`} >
               <Image
-                className=" rounded-2xl object-fit h-60 w-fi"
+                className=" rounded-2xl object-fit h-60 w-fit mx-auto"
                 src={ params.product.image }
                 alt=''
                 width={ 300 }
@@ -86,12 +92,16 @@ console.log(params.product)
             </p>
           </div>
           <div className="mt-4 pl-2 mb-2 flex justify-between">
-            <div>
+            <div className='flex flex-col gap-2'>
               <Link href={`/product/${params.product.id}`} >
                 <p className="text-lg font-semibold text-gray-900 mb-0">
                   {params.product.title }
                 </p>
               </Link>
+              <div className=' flex flex-row text-black gap-1'>
+                <div>
+                  Rating 
+                </div>
               {
           rateLoop.map((x) => (
             <svg className="w-5 h-5 text-yellow-300" key={x} fill="currentColor" viewBox="0 0 20 20"
@@ -102,9 +112,13 @@ console.log(params.product)
 					</svg>
           ))
         }
+              </div>
+              <div className='flex text-black gap-1'>
+              <p>Price </p>
               <p className="text-md text-gray-800 mt-0">
-                {params.product.price  }
+                {params.product.price} $
               </p>
+              </div>
             </div>
             <div className="flex flex-col-reverse mb-1 mr-4 group cursor-pointer">
               <svg
@@ -168,5 +182,7 @@ console.log(params.product)
 // </div>
 //   )
 }
+
+
 
  

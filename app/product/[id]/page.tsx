@@ -31,10 +31,9 @@ const addProduct = async (product: any) => {
     const savedProduct = savedProducts.filter((p: any) => p.id == product.id)
 
     if (ids.includes(product.id.toString())) {
-        console.log('product exists')
-        console.log(product)
+       
         const newq = parseInt(product.quantity) 
-        console.log(newq)
+        
         const docRef = await setDoc(doc(db, "products", product.id.toString()), {
             ...product,
             quantity: savedProduct[0].quantity + 1,
