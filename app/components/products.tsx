@@ -2,24 +2,15 @@ import React from 'react'
 import Product from './product'
 import IProduct from '../types/product'
 import { useEffect, useState } from 'react'
-import { collection, getDocs,doc,setDoc } from 'firebase/firestore'
-import { db } from '../../firebase'
+import ProductService  from '../network/ProductService'
 
 
-const onLikeClick = async (product: IProduct) => {
- 
-    const docRef = await setDoc(doc(db, "Allproducts", product.id.toString()), {
-        ...product,
-        isLiked: !product.isLiked ,
-    });
     
-}
-const getProducts = async () => {
-    const querySnapshot = await getDocs(collection(db, "Allproducts"))
-    const products = querySnapshot.docs.map((doc) => doc.data()) as IProduct[]
-    return products
-}
 
+const getProducts = async () => {
+    const data = await ProductService.getAllProdcuts()
+    return data
+}
 
 function Products(props: any) {
    const [isLoading, setIsLoading] = useState(true)
@@ -54,7 +45,7 @@ function Products(props: any) {
          )
               :(products.map((product:IProduct) => (
                 <div key={product.id}>
-                    <Product onLikeClick={onLikeClick} product={product}/>
+                    <Product  product={product}/>
                 </div>
 
               )))
