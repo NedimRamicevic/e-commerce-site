@@ -27,4 +27,7 @@ class ProductService extends BaseService {
     }
 }
 
-export default ProductService();
+
+const productServiceInstance = new ProductService();
+
+export default productServiceInstance;

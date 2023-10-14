@@ -1,36 +1,12 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link';
-import { collection, getDocs,doc,setDoc } from 'firebase/firestore'
-import { db } from '../../firebase'
 
-
-const addProduct = async (product: any) => {
-  //add with custom id
-  //get collection ids
-  const querySnapshot = await getDocs(collection(db, "products"))
-  const ids = querySnapshot.docs.map((doc) => doc.id)
-  const savedProducts= querySnapshot.docs.map((doc) => doc.data())
-  const savedProduct = savedProducts.filter((p: any) => p.id == product.id)
-
-  if (ids.includes(product.id.toString())) {
-     
-      const newq = parseInt(product.quantity) 
-      
-      const docRef = await setDoc(doc(db, "products", product.id.toString()), {
-          ...product,
-          quantity: savedProduct[0].quantity + 1,
-      });
-  }
-  else {
-      const docRef = await setDoc(doc(db, "products", product.id.toString()), {
-          ...product,
-          quantity: 1,
-      });
-  }
-  
-  
-  
+const randomStar = () => {
+  return Math.floor(Math.random() * 5)
+}
+const randomPrice = () => {
+  return Math.floor(Math.random() * 1000)
 }
 const dynamicArrayfromRating = (rating: number) => {
   let arr = []
@@ -52,7 +28,7 @@ interface IProduct {
 
 export default function Product(params :any) {
   
-  const rateLoop = dynamicArrayfromRating(params.product.rating.rate)
+  const rateLoop = dynamicArrayfromRating(randomStar() + 1)
  
   return (
    
@@ -63,19 +39,13 @@ export default function Product(params :any) {
         >
           <div className="overflow-x-hidden rounded-2xl relative">
             <Link href={`/product/${params.product.id}`} >
-              <Image
-                className=" rounded-2xl object-fit h-60 w-fit mx-auto"
-                src={ params.product.image }
-                alt=''
-                width={ 300 }
-                height={ 300 }
-              />
+              <Image className=" rounded-2xl object-fit h-60 w-fit mx-auto" src="https://random.imagecdn.app/500/500" alt='' width={ 300 } height={ 300 }/>
             </Link>
             <p
               className="absolute right-2 top-2 bg-white rounded-full p-2 cursor-pointer group"
             >
               <svg
-              onClick={() => addProduct(params.product)}
+              onClick={() => {}}
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 group-hover:opacity-50 opacity-70"
                 fill="none"
@@ -95,7 +65,7 @@ export default function Product(params :any) {
             <div className='flex flex-col gap-2'>
               <Link href={`/product/${params.product.id}`} >
                 <p className="text-lg font-semibold text-gray-900 mb-0">
-                  {params.product.title }
+                  {params.product.name }
                 </p>
               </Link>
               <div className=' flex flex-row text-black gap-1'>
@@ -116,7 +86,7 @@ export default function Product(params :any) {
               <div className='flex text-black gap-1'>
               <p>Price </p>
               <p className="text-md text-gray-800 mt-0">
-                {params.product.price} $
+                {randomPrice()} $
               </p>
               </div>
             </div>

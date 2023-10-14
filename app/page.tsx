@@ -20,9 +20,6 @@ export default function Home() {
   return (
     
     <div className='flex flex-col gap-2 m-2 mx-12 bg-white text-black'>
-      <div>
-        
-      </div>
       <div className='flex gap-11 mx-6'>
         <div className='flex gap-3'>
         

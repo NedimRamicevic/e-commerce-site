@@ -1,12 +1,15 @@
 // Base Service fro fetching data
 
-BASE_SERVICE_URL = "https://northwind.vercel.app/api/"
+const BASE_SERVICE_URL = "https://northwind.vercel.app/api/"
 
-
-
-export default  get = async(url) => {
-
-    const response = await fetch(BASE_SERVICE_URL + url);
-    const data = await response.json();
-    return data;
+class BaseService {
+    get = (url) => {
+        console.log('get', url);
+        return fetch(BASE_SERVICE_URL + url).then(response => {
+            console.log('response', response);
+            return response.json();
+        });
+    }
 }
+
+export default BaseService;
